@@ -10,13 +10,11 @@ terraform {
 
   # Optional S3 backend; can be overridden via CLI/env
   backend "s3" {
-    bucket  = var.backend_bucket
-    key     = var.backend_key
-    region  = var.backend_region
-    encrypt = true
+    bucket  = "logistics-mot"
+    key     = "ec2-module/terraform.tfstate"
+    region  = "ap-south-1"
   }
 }
-
 provider "aws" {
   region = var.aws_region
 

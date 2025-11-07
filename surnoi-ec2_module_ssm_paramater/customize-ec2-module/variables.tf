@@ -50,13 +50,11 @@ variable "instances" {
   }
 }
 
-
 variable "ami_filter_name" {
   description = "AMI name filter"
   type        = string
   default     = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
 }
-
 
 variable "route53_zone_id" {
   description = "Route53 Hosted Zone ID"
@@ -75,7 +73,6 @@ variable "create_dns" {
   type        = bool
   default     = false
 }
-
 
 variable "project_name" {
   description = "Project name"
@@ -110,7 +107,6 @@ variable "key_pair_name" {
   type        = string
   default     = "logistics-mot-kp"
 }
-
 
 variable "security_groups" {
   description = "Security group definitions"
