@@ -22,7 +22,7 @@ variable "instances" {
     jenkins-master = {
       instance_type        = "t3.medium"
       iam_instance_profile = "jenkins-role"
-      user_data            = "./user_data/user_data.jenkins.sh"
+      user_data            = "user_data/user_data.jenkins.sh"
       security_group_ref   = "backend"
       label                = "jenkins-master"
       volume_size          = 30
@@ -32,7 +32,7 @@ variable "instances" {
     java-agent = {
       instance_type        = "t3.small"
       iam_instance_profile = "jenkins-role"
-      user_data            = "./user_data/user_data.java.sh"
+      user_data            = "user_data/user_data.java.sh"
       security_group_ref   = "backend"
       label                = "java-agent"
       volume_size          = 30
@@ -41,7 +41,7 @@ variable "instances" {
 
     aiml-server = {
       instance_type        = "t3.large"
-      user_data            = "./user_data/user_data.ml.sh"
+      user_data            = "user_data/user_data.ml.sh"
       security_group_ref   = "aiml"
       label                = "aiml-server"
       volume_size          = 30
