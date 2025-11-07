@@ -1,14 +1,13 @@
+
 module "security_groups" {
   source          = "./sg-module"
   project_name    = var.project_name
   environment     = var.environment
   security_groups = var.security_groups
-
-  # ✅ Fetch VPC ID from SSM
   vpc_id          = data.aws_ssm_parameter.vpc_id.value
-
   common_tags     = var.common_tags
 }
+
 
 module "ec2_instances" {
   source          = "./ec2-module"
@@ -16,7 +15,7 @@ module "ec2_instances" {
   environment     = var.environment
   ami_id          = data.aws_ami.ubuntu.id
 
-  subnet_id       = jsondecode(data.aws_ssm_parameter.public_subnets.value)[0]
+  subnet_id       = data.aws_ssm_parameter.public_subnets.value
 
   key_pair_name   = var.key_pair_name
   instances       = var.instances
