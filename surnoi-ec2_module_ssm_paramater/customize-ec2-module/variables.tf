@@ -74,11 +74,11 @@ variable "create_dns" {
   type        = bool
   default     = false
 }
-variable "allowed_ips" {
-  description = "List of allowed public IPs for SSH access"
-  type        = list(string)
-  default     =["152.57.25.41/32", "119.235.50.234/32"]
-}
+# variable "allowed_ips" {
+#   description = "List of allowed public IPs for SSH access"
+#   type        = list(string)
+#   default     =["152.57.25.41/32", "119.235.50.234/32"]
+# }
 variable "project_name" {
   description = "Project name"
   type        = string
@@ -139,8 +139,10 @@ variable "security_groups" {
       name        = "logistics-mot-dev-jenkins"
       description = "Allow Jenkins UI and SSH access"
       ingress = [
-        { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }
-        # SSH rule from allowed IPs will be merged later
+        # Jenkins UI
+        { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
+        # SSH access
+        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }
       ]
       egress = [
         { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"] }
@@ -151,7 +153,10 @@ variable "security_groups" {
       name        = "logistics-mot-dev-backend"
       description = "Allow backend app and SSH access"
       ingress = [
-        { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }
+        # Backend app
+        { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
+        # SSH access
+        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }
       ]
       egress = [
         { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"] }
@@ -162,7 +167,10 @@ variable "security_groups" {
       name        = "logistics-mot-dev-aiml"
       description = "Allow AI/ML API and SSH access"
       ingress = [
-        { from_port = 8000, to_port = 8000, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }
+        # AI/ML service
+        { from_port = 8000, to_port = 8000, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
+        # SSH access
+        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }
       ]
       egress = [
         { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"] }
