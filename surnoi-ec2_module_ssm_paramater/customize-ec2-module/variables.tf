@@ -137,7 +137,7 @@ variable "security_groups" {
       ingress = [
         { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
         # Allow SSH only from your allowed IPs
-        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = local.allowed_ips }
+        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = [local.allowed_ips]}
       ]
       egress = [
         { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"] }
@@ -150,7 +150,7 @@ variable "security_groups" {
       ingress = [
         { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
         # SSH from Jenkins and your IPs
-        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = local.allowed_ips },
+        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = [local.allowed_ips] },
         { from_port = 22, to_port = 22, protocol = "tcp", security_groups = ["jenkins"] }
       ]
       egress = [
@@ -164,7 +164,7 @@ variable "security_groups" {
       ingress = [
         { from_port = 8000, to_port = 8000, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
         # SSH from Jenkins and your IPs
-        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = local.allowed_ips },
+        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = [local.allowed_ips] },
         { from_port = 22, to_port = 22, protocol = "tcp", security_groups = ["jenkins"] }
       ]
       egress = [
