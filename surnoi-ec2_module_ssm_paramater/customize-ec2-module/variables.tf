@@ -21,7 +21,7 @@ variable "instances" {
   default = {
     jenkins-master = {
       instance_type        = "t3.medium"
-      iam_instance_profile = "jenkins-role"
+      iam_instance_profile = "IAM-ECR-Role"
       user_data            = "user_data/user_data.jenkins.sh"
       security_group_ref   = "backend"
       label                = "jenkins-master"
@@ -31,7 +31,7 @@ variable "instances" {
 
     java-agent = {
       instance_type        = "t3.small"
-      iam_instance_profile = "jenkins-role"
+      iam_instance_profile = "IAM-ECR-Role"
       user_data            = "user_data/user_data.java.sh"
       security_group_ref   = "backend"
       label                = "java-agent"
@@ -129,7 +129,7 @@ variable "security_groups" {
 
   default = {
     backend = {
-      name        = "logistics-mot-dev-backend-sg"
+      name        = "logistics-mot-dev-backend"
       description = "Allow backend traffic (Jenkins + Java Agent)"
       ingress = [
         { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
@@ -141,7 +141,7 @@ variable "security_groups" {
     }
 
     aiml = {
-      name        = "logistics-mot-dev-aiml-sg"
+      name        = "logistics-mot-dev-aiml"
       description = "Allow AI/ML API traffic"
       ingress = [
         { from_port = 8000, to_port = 8000, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },

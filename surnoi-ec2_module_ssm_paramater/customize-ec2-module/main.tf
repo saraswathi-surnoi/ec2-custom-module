@@ -4,7 +4,7 @@ module "security_groups" {
   project_name    = var.project_name
   environment     = var.environment
   security_groups = var.security_groups
-  vpc_id          = data.aws_ssm_parameter.vpc_id.value
+  vpc_id          = local.vpc_id
   common_tags     = var.common_tags
 }
 
@@ -15,7 +15,7 @@ module "ec2_instances" {
   environment     = var.environment
   ami_id          = data.aws_ami.ubuntu.id
 
-  subnet_id       = data.aws_ssm_parameter.public_subnets.value
+  subnet_id       = local.public_subnet_id
 
   key_pair_name   = var.key_pair_name
   instances       = var.instances

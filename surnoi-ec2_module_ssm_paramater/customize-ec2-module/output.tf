@@ -1,7 +1,4 @@
 
-##########################################################
-# OUTPUTS — LOGISTICS PROJECT
-##########################################################
 
 output "project_info" {
   description = "Project and environment summary"
@@ -12,17 +9,13 @@ output "project_info" {
   }
 }
 
-##########################################################
-# INSTANCE PUBLIC IPS
-##########################################################
+
 output "instance_public_ips" {
   description = "Public IPs of EC2 instances"
   value       = module.ec2_instances.instance_public_ips
 }
 
-##########################################################
-# ROUTE53 RECORDS
-##########################################################
+
 output "route53_dns_records" {
   description = "DNS names of EC2 instances (if Route53 is enabled)"
   value = var.route53_zone_id != "" ? {
@@ -31,9 +24,7 @@ output "route53_dns_records" {
   } : {}
 }
 
-##########################################################
-# SUMMARY TABLE (Friendly Display)
-##########################################################
+
 output "instance_summary" {
   description = "Formatted table of instances, IPs, and DNS names"
   value = [
