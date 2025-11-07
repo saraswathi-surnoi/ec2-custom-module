@@ -1,6 +1,7 @@
-
 output "sg_map" {
-  value = { for k, v in aws_security_group.sg : k => v.id }
+  description = "Map of all created security groups and their IDs"
+  value       = { for k, v in aws_security_group.this : k => v.id }
 }
+
 
 
