@@ -6,14 +6,11 @@ resource "aws_instance" "ec2_instances" {
   subnet_id              = var.subnet_id
   key_name               = var.key_pair_name
   vpc_security_group_ids = [lookup(var.sg_map, each.value.security_group_ref)]
+  iam_instance_profile   = lookup(each.value, "iam_instance_profile", null)
 
- 
-  iam_instance_profile = lookup(each.value, "iam_instance_profile", null)
+  # ✅ FIXED: Correct relative path to user_data scripts
+  user_data = lookup(each.value, "user_data", null) != null ? file("${path.module}/../${each.value.user_data}") : null
 
-  
- user_data = lookup(each.value, "user_data", null) != null ? file("${path.module}/${each.value.user_data}") : null
-
-  
   root_block_device {
     volume_size = each.value.volume_size
     volume_type = lookup(each.value, "volume_type", "gp3")
@@ -29,8 +26,7 @@ resource "aws_instance" "ec2_instances" {
   )
 }
 
-
-
+# ✅ Route53 DNS records
 resource "aws_route53_record" "dns_records" {
   for_each = var.create_dns ? aws_instance.ec2_instances : {}
 
