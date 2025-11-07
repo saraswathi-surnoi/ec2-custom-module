@@ -11,7 +11,7 @@ resource "aws_instance" "ec2_instances" {
   iam_instance_profile = lookup(each.value, "iam_instance_profile", null)
 
   
-  user_data = lookup(each.value, "user_data", null) != null ? file("${path.root}/${each.value.user_data}") : null
+ user_data = lookup(each.value, "user_data", null) != null ? file("${path.module}/${each.value.user_data}") : null
 
   
   root_block_device {
