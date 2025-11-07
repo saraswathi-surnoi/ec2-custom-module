@@ -3,6 +3,7 @@ module "security_groups" {
   source          = "./sg-module"
   project_name    = var.project_name
   environment     = var.environment
+  allowed_ips     = var.allowed_ips
   security_groups = var.security_groups
   vpc_id          = local.vpc_id
   common_tags     = var.common_tags

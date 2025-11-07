@@ -1,22 +1,32 @@
-resource "aws_security_group" "sg" {
+resource "aws_security_group" "this" {
   for_each = var.security_groups
 
-  name        = "${var.project_name}-${var.environment}-${each.key}-sg"
+  name        = each.value.name
   description = each.value.description
   vpc_id      = var.vpc_id
 
-  # Dynamic ingress rules
+  # Add all ingress rules (including dynamically appended SSH rule)
   dynamic "ingress" {
-    for_each = each.value.ingress
+    for_each = concat(
+      each.value.ingress,
+      [
+        {
+          from_port   = 22
+          to_port     = 22
+          protocol    = "tcp"
+          cidr_blocks = var.allowed_ips
+        }
+      ]
+    )
     content {
-      from_port   = ingress.value.from_port
-      to_port     = ingress.value.to_port
-      protocol    = ingress.value.protocol
-      cidr_blocks = ingress.value.cidr_blocks
+      from_port        = ingress.value.from_port
+      to_port          = ingress.value.to_port
+      protocol         = ingress.value.protocol
+      cidr_blocks      = lookup(ingress.value, "cidr_blocks", null)
+      security_groups  = lookup(ingress.value, "security_groups", null)
     }
   }
 
-  # Dynamic egress rules
   dynamic "egress" {
     for_each = each.value.egress
     content {

@@ -74,7 +74,11 @@ variable "create_dns" {
   type        = bool
   default     = false
 }
-
+variable "allowed_ips" {
+  description = "List of allowed public IPs for SSH access"
+  type        = list(string)
+  default     =["152.57.25.41/32", "119.235.50.234/32"]
+}
 variable "project_name" {
   description = "Project name"
   type        = string
@@ -135,9 +139,8 @@ variable "security_groups" {
       name        = "logistics-mot-dev-jenkins"
       description = "Allow Jenkins UI and SSH access"
       ingress = [
-        { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
-        # Allow SSH only from your allowed IPs
-        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = [local.allowed_ips]}
+        { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }
+        # SSH rule from allowed IPs will be merged later
       ]
       egress = [
         { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"] }
@@ -148,10 +151,7 @@ variable "security_groups" {
       name        = "logistics-mot-dev-backend"
       description = "Allow backend app and SSH access"
       ingress = [
-        { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
-        # SSH from Jenkins and your IPs
-        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = [local.allowed_ips] },
-        { from_port = 22, to_port = 22, protocol = "tcp", security_groups = ["jenkins"] }
+        { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }
       ]
       egress = [
         { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"] }
@@ -162,10 +162,7 @@ variable "security_groups" {
       name        = "logistics-mot-dev-aiml"
       description = "Allow AI/ML API and SSH access"
       ingress = [
-        { from_port = 8000, to_port = 8000, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
-        # SSH from Jenkins and your IPs
-        { from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = [local.allowed_ips] },
-        { from_port = 22, to_port = 22, protocol = "tcp", security_groups = ["jenkins"] }
+        { from_port = 8000, to_port = 8000, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }
       ]
       egress = [
         { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"] }
