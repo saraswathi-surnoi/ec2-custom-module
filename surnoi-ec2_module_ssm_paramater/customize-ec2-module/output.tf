@@ -39,5 +39,8 @@ output "instance_summary" {
     }
   ]
 }
+output "allowed_ips" {
+  value = local.allowed_ips
+}
 
 
