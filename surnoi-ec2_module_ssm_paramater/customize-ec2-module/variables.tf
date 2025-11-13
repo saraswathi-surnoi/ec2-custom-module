@@ -13,14 +13,14 @@ variable "instances" {
   validation {
     condition = alltrue([
       for _, inst in var.instances :
-      contains(["t2.micro", "t3.micro", "t3.small", "t3.medium", "t3.large"], inst.instance_type)
+      contains(["t2a.micro", "t3a.micro", "t3a.small", "t3a.medium", "t3a.large"], inst.instance_type)
     ])
     error_message = "Invalid instance type. Allowed: t2.micro, t3.micro, t3.small, t3.medium, t3.large"
   }
 
   default = {
     jenkins-master = {
-      instance_type        = "t3.medium"
+      instance_type        = "t3a.medium"
       iam_instance_profile = "IAM-ECR-Role"
       user_data            = "user_data/user_data.jenkins.sh"
       security_group_ref   = "jenkins"
@@ -30,7 +30,7 @@ variable "instances" {
     }
 
     java-agent = {
-      instance_type        = "t3.small"
+      instance_type        = "t3a.small"
       iam_instance_profile = "IAM-ECR-Role"
       user_data            = "user_data/user_data.java.sh"
       security_group_ref   = "backend"
@@ -40,7 +40,7 @@ variable "instances" {
     }
 
     aiml-server = {
-      instance_type        = "t3.large"
+      instance_type        = "t3a.large"
       user_data            = "user_data/user_data.ml.sh"
       security_group_ref   = "aiml"
       label                = "aiml-server"
