@@ -4,8 +4,8 @@
 # Description   : Automated Jenkins Master setup script for Ubuntu, Debian,
 #                 Amazon Linux, RHEL, or CentOS. Installs Java 21, Maven, Docker,
 #                 AWS CLI v2, and Jenkins, along with all required dependencies.
-# Author        : Kanaparthi Siddharth
-# Updated By    : Kanaparthi Siddharth
+# Author        : saraswathi nandula
+# Updated By    : saraswathi nandula
 # ==============================================================================
 # This script is intended for setting up a production-ready Jenkins Master
 # instance with proper package installation, retry mechanisms, and logging.
